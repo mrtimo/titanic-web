@@ -1,0 +1,53 @@
+>>>malloy
+import 'titanic-web.malloy'
+>>>markdown
+Let's look at all the data -- Select: *
+>>>malloy
+run: titanic -> {
+    select: *
+}
+>>>malloy
+run: titanic -> {
+    select: Age
+    Name
+    Fare
+    limit: 10
+}
+>>>markdown
+Let's look at if people survived
+>>>malloy
+run: titanic -> {
+  group_by: Survived
+  aggregate: 
+  num_people is count()
+  avg_age is Age.avg() -- this is the new line
+  avg_fare is avg(Fare) 
+  avg_family is total_family.avg()
+}
+>>>markdown
+let's look at this
+>>>malloy
+run: titanic -> {
+  group_by: Survived
+  aggregate: avg_family is avg(`Siblings/Spouses Aboard` + `Parents/Children Aboard`)
+  avg_age is Age.avg() -- this is the new line
+}
+>>>malloy
+run: titanic -> {
+  group_by: Survived
+  aggregate: avg_fare is Fare.avg()
+}
+>>>malloy
+run: titanic -> {
+  group_by: Survived
+  aggregate: avg_fare is count()
+  avg_age is Age.avg() -- this is the new line
+  family is total_family.avg()
+}
+>>>malloy
+run: titanic -> {
+  group_by: Survived
+  aggregate: avg_fare is count()
+  avg_age is Age.avg() -- this is the new line
+  family is total_family.avg()
+}
